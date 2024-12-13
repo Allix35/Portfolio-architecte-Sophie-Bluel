@@ -1,67 +1,83 @@
-// Fonction principale pour charger les œuvres et les catégories
+// Functions to charge categories and pojects
+
 async function work() {
     try {
-        const works = await fetchWorks();
+        console.log("Début de la récupération des données");
+        const gallery = await fetchGallery();
         const categories = await fetchCategories();
 
-        displayFilters(categories, works); // Génération des filtres
-        displayWorks(works); // Affichage initial des œuvres
+        console.log("Galerie après récupération :", gallery);
+        console.log("Catégories après récupération :", categories);
+
+        displayFilters(categories, gallery); // Génération des filtres
+        displayGallery(gallery); // Affichage initial de la galerie
     } catch (error) {
         console.error("Erreur lors du chargement :", error);
     }
 }
 
-// Récupérer les œuvres depuis l'API
-async function fetchWorks() {
+// Get gallery from API
+
+async function fetchGallery() {
     const url = "http://localhost:5678/api/works";
     try {
         const response = await fetch(url);
+        console.log("Réponse API galerie :", response);
         if (!response.ok) {
             throw new Error(`Erreur : ${response.status}`);
         }
-        return await response.json();
+        const data = await response.json();
+        console.log("Données de la galerie récupérées :", data);
+        return data;
     } catch (error) {
-        console.error("Erreur de récupération des œuvres :", error);
+        console.error("Erreur de récupération de la galerie :", error);
         return [];
     }
 }
 
-// Récupérer les catégories depuis l'API
+// Get categories from API
+
 async function fetchCategories() {
     const url = "http://localhost:5678/api/categories";
     try {
         const response = await fetch(url);
+        console.log("Réponse API catégories :", response);
         if (!response.ok) {
             throw new Error(`Erreur : ${response.status}`);
         }
-        return await response.json();
+        const data = await response.json();
+        console.log("Données des catégories récupérées :", data);
+        return data;
     } catch (error) {
         console.error("Erreur de récupération des catégories :", error);
         return [];
     }
 }
 
-// Afficher les œuvres dans la galerie
-function displayWorks(works) {
+// Display project into gallery
+
+function displayGallery(gallery) {
+    console.log("Affichage de la galerie :", gallery);
     const galleryContainer = document.querySelector(".gallery");
-    galleryContainer.innerHTML = ""; // Réinitialise la galerie
-    works.forEach((work) => {
-        const figure = createFigure(work);
+    galleryContainer.innerHTML = ""; 
+    gallery.forEach((item) => {
+        const figure = createFigure(item);
         galleryContainer.appendChild(figure);
     });
 }
 
-// Créer un élément pour chaque œuvre
-function createFigure(work) {
+// Create element for each project 
+
+function createFigure(item) {
     const figure = document.createElement("figure");
-    figure.dataset.category = work.categoryId;
+    figure.dataset.category = item.categoryId;
 
     const img = document.createElement("img");
-    img.src = work.imageUrl;
-    img.alt = work.title;
+    img.src = item.imageUrl;
+    img.alt = item.title;
 
     const figcaption = document.createElement("figcaption");
-    figcaption.textContent = work.title;
+    figcaption.textContent = item.title;
 
     figure.appendChild(img);
     figure.appendChild(figcaption);
@@ -69,47 +85,56 @@ function createFigure(work) {
     return figure;
 }
 
-// Générer les filtres dynamiquement avec suppression des doublons
-function displayFilters(categories, works) {
-    const filtersContainer = document.querySelector("#filters");
-    filtersContainer.innerHTML = ""; // Supprime les filtres existants
+// Function to generate filters
 
-    // Utilisation de Set pour garantir des catégories uniques
+function displayFilters(categories, gallery) {
+    console.log("Affichage des filtres :", categories);
+    const filtersContainer = document.querySelector("#filters");
+    filtersContainer.innerHTML = ""; 
+
+    // Use Set for unique categories
+
     const uniqueCategories = Array.from(new Set(categories.map(category => category.name)))
         .map(name => categories.find(category => category.name === name));
 
-    // Bouton "Tous"
+    // Button "Tous" creation
+
     const allButton = document.createElement("button");
     allButton.textContent = "Tous";
     allButton.classList.add("filter-btn", "active-filter");
     allButton.addEventListener("click", () => {
-        displayWorks(works); // Affiche toutes les œuvres
+        displayGallery(gallery); 
         toggleActiveFilter(allButton);
     });
     filtersContainer.appendChild(allButton);
 
-    // Boutons pour chaque catégorie unique
+    // Button for each categories
+
     uniqueCategories.forEach((category) => {
         const button = document.createElement("button");
         button.textContent = category.name;
         button.classList.add("filter-btn");
         button.addEventListener("click", () => {
-            const filteredWorks = works.filter((work) => work.categoryId === category.id);
-            displayWorks(filteredWorks);
+            const filteredGallery = gallery.filter((item) => item.categoryId === category.id);
+            displayGallery(filteredGallery);
             toggleActiveFilter(button);
         });
         filtersContainer.appendChild(button);
     });
 }
 
-// Basculer la classe active sur un bouton
+// Get the active class on button
+
 function toggleActiveFilter(activeButton) {
+    console.log("Activation du filtre :", activeButton.textContent);
     document.querySelectorAll(".filter-btn").forEach((btn) => btn.classList.remove("active-filter"));
     activeButton.classList.add("active-filter");
 }
 
-// Lancer l'application
+// Function initialized
+
 work();
+
 
 
 
