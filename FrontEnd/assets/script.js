@@ -6,7 +6,7 @@ async function fetchGallery() {
         if (!response.ok) throw new Error(`Erreur : ${response.status}`);
         const data = await response.json();
         console.log("Travaux récupérés :", data);
-        return data;
+        return Array.isArray(data) ? data : [];
     } catch (error) {
         console.error("Erreur lors de la récupération des travaux :", error.message);
         return [];
@@ -16,6 +16,11 @@ async function fetchGallery() {
 // Affichage des travaux dans la galerie
 function displayGallery(gallery) {
     const galleryContainer = document.querySelector(".gallery");
+    if (!galleryContainer) {
+        console.error("Le conteneur .gallery est introuvable !");
+        return;
+    }
+
     galleryContainer.innerHTML = ""; // Vide le contenu existant
     gallery.forEach((work) => {
         const figure = document.createElement("figure");
@@ -41,7 +46,7 @@ async function fetchCategories() {
         if (!response.ok) throw new Error(`Erreur : ${response.status}`);
         const data = await response.json();
         console.log("Catégories récupérées :", data);
-        return data;
+        return Array.isArray(data) ? data : [];
     } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error.message);
         return [];
@@ -51,7 +56,9 @@ async function fetchCategories() {
 // Affichage des boutons de filtre
 function displayFilters(categories, gallery) {
     const filtersContainer = document.querySelector("#filters");
-    filtersContainer.innerHTML = ""; // Vide le contenu existant
+    if (!filtersContainer) return;
+
+    filtersContainer.innerHTML = "";
 
     const allButton = document.createElement("button");
     allButton.textContent = "Tous";
@@ -85,87 +92,39 @@ function toggleActiveFilter(activeButton) {
     activeButton.classList.add("active-filter");
 }
 
-// Gestion des erreurs dans le formulaire de connexion
-function showErrorMessage(element, message) {
-    if (element) {
-        element.textContent = message;
-        element.style.display = "block";
-    }
-}
-
-// Fonction pour gérer la requête POST de connexion
-async function loginUser(email, password) {
-    console.log("Tentative de connexion avec :", email);
+// Fonction principale (work)
+async function work() {
+    console.log("Token actuel :", sessionStorage.getItem("Token") || "Aucun token disponible.");
     try {
-        const response = await fetch("http://localhost:5678/api/users/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-        });
+        const gallery = await fetchGallery();
+        const categories = await fetchCategories();
 
-        if (response.status === 200) {
-            const data = await response.json();
-            console.log("Connexion réussie :", data);
+        displayGallery(gallery);
+        displayFilters(categories, gallery);
 
-            sessionStorage.setItem("Token", data.token);
-            sessionStorage.setItem("isConnected", "true");
-            window.location.replace("index.html");
-        } else if (response.status === 401) {
-            throw new Error("Identifiants incorrects.");
-        } else if (response.status === 404) {
-            throw new Error("Utilisateur non trouvé.");
-        } else {
-            throw new Error("Erreur inattendue. Veuillez réessayer.");
+        manageAdminElements();
+
+        if (document.body.id === "login-page") {
+            setupLoginForm();
         }
     } catch (error) {
-        console.error("Erreur lors de la tentative de connexion :", error.message);
-        showErrorMessage(document.querySelector(".error-message"), error.message);
+        console.error("Erreur lors de l'initialisation :", error.message);
     }
 }
-
-// Gestion du formulaire de connexion
-function setupLoginForm() {
-    console.log("setupLoginForm est exécutée"); // Vérifie si la fonction est appelée
-
-    const loginForm = document.querySelector("#loginForm");
-    console.log("Formulaire trouvé :", loginForm); // Vérifie si le formulaire est trouvé
-
-    if (!loginForm) {
-        console.error("Formulaire de connexion introuvable !");
-        return;
-    }
-
-    loginForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        console.log("Formulaire soumis"); // Vérifie si l'événement de soumission est déclenché
-
-        const email = document.querySelector("#email").value.trim();
-        const password = document.querySelector("#password").value.trim();
-        console.log("Email :", email, "Password :", password); // Vérifie les valeurs saisies
-
-        if (!email || !password) {
-            showErrorMessage(document.querySelector(".error-message"), "Veuillez remplir tous les champs.");
-            return;
-        }
-
-        loginUser(email, password);
-    });
-}
-
 
 // Gestion des éléments administratifs
 function manageAdminElements() {
     const loginButton = document.getElementById("login");
     const logoutButton = document.getElementById("logout");
-    const adminBar = document.getElementById("admin-logged");
+    const adminBar = document.querySelector(".edit-bar");
+    const editButton = document.querySelector(".edit-button");
 
     const isConnected = sessionStorage.getItem("isConnected") === "true";
 
     if (loginButton) loginButton.style.display = isConnected ? "none" : "block";
     if (logoutButton) logoutButton.style.display = isConnected ? "block" : "none";
     if (adminBar) adminBar.style.display = isConnected ? "flex" : "none";
+    if (editButton) editButton.style.display = isConnected ? "inline-flex" : "none";
 
     if (logoutButton) {
         logoutButton.addEventListener("click", () => {
@@ -176,31 +135,64 @@ function manageAdminElements() {
     }
 }
 
-function work() {
-    console.log("Token actuel :", sessionStorage.getItem("Token") || "Aucun token disponible.");
+// Gestion des erreurs dans le formulaire de connexion
+function showErrorMessage(element, message) {
+    if (element) {
+        element.textContent = message;
+        element.style.display = "block";
+    }
+}
 
-    try {
-        // Récupération des travaux et des catégories
-        const gallery = document.querySelector(".gallery");
-        if (gallery) {
-            fetchGallery().then(displayGallery);
-            fetchCategories().then(categories => displayFilters(categories, gallery));
+// Gestion du formulaire de connexion
+function setupLoginForm() {
+    const loginForm = document.querySelector("#loginForm");
+    if (!loginForm) return;
+
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const email = document.querySelector("#email").value.trim();
+        const password = document.querySelector("#password").value.trim();
+
+        if (!email || !password) {
+            showErrorMessage(document.querySelector(".error-message"), "Veuillez remplir tous les champs.");
+            return;
         }
 
-        // Gestion des éléments administratifs
-        manageAdminElements();
+        loginUser(email, password);
+    });
+}
 
-        // Appel du formulaire uniquement sur la page de connexion
-        if (document.body.id === "login-page") {
-            setupLoginForm();
+// Fonction pour gérer la requête POST de connexion
+async function loginUser(email, password) {
+    console.log("Tentative de connexion avec :", email);
+    try {
+        const response = await fetch("http://localhost:5678/api/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Connexion réussie :", data);
+
+            sessionStorage.setItem("Token", data.token);
+            sessionStorage.setItem("isConnected", "true");
+            window.location.replace("index.html");
+        } else {
+            throw new Error("Identifiants incorrects.");
         }
     } catch (error) {
-        console.error("Erreur lors de l'initialisation :", error.message);
+        console.error("Erreur lors de la tentative de connexion :", error.message);
+        showErrorMessage(document.querySelector(".error-message"), error.message);
     }
 }
 
 // Lancer l'application
 work();
+
+
 
 
 

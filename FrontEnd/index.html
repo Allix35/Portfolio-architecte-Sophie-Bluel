@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Homepage</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/style.css">
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/style.css">
+    <!-- Importation de Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
 <body>
+  <!-- Barre d'édition (masquée par défaut) -->
+  <div class="edit-bar" style="display: none;">
+    <p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>
+  </div>
+
   <!-- En-tête -->
   <header>
     <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
@@ -18,7 +28,7 @@
         <li><a href="#portfolio">projets</a></li>
         <li><a href="#contact">contact</a></li>
         <li id="login"><a href="login.html">login</a></li>
-        <li id="logout"><a href="#">logout</a></li>
+        <li id="logout" style="display: none;"><a href="#">logout</a></li>
         <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
       </ul>
     </nav>
@@ -40,12 +50,17 @@
 
     <!-- Section portfolio -->
     <section id="portfolio">
-      <h2>Mes Projets</h2>
+      <div class="title-container">
+        <h2>Mes projets</h2>
+        <a href="#" class="edit-button" style="display: none;">
+          <i class="fa-solid fa-pen-to-square"></i> modifier
+        </a>
+      </div>
       <div id="filters">
-        <!-- Boutons de filtres générés dynamiquement -->
+        <!-- Boutons de filtres -->
       </div>
       <div class="gallery">
-        <!-- Galerie générée dynamiquement -->
+        <!-- Galerie -->
       </div>
     </section>
 
@@ -78,6 +93,7 @@
   <script src="./assets/script.js"></script>
 </body>
 </html>
+
 
 
 

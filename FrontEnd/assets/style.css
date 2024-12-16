@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/
+/* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -24,17 +24,12 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-
+/* Global */
 body {
 	line-height: 1;
 	max-width: 1140px;
 	margin: auto;
-	font-family: 'Work Sans';
+	font-family: 'Work Sans', sans-serif;
 	font-size: 14px;
 	background-color: #FFFEF8;
 }
@@ -45,14 +40,10 @@ header {
 	margin: 50px 0;
 }
 
-section {
-	margin: 50px 0;
-}
-
 h1 {
 	display: flex;
 	flex-direction: column;
-	font-family: 'Syne';
+	font-family: 'Syne', sans-serif;
 	font-size: 22px;
 	font-weight: 800;
 	color: #B1663C;
@@ -73,13 +64,13 @@ h2 {
 	color: #1D6154;
 }
 
-p{
+p {
 	color: #3D3D3D;
 }
 
 a {
 	color: inherit;
-    text-decoration: none;
+	text-decoration: none;
 }
 
 nav ul {
@@ -98,18 +89,18 @@ li:hover {
 	color: #B1663C;
 }
 
-
-/* instagram icon update */
-
+/* Instagram icon */
 .instagram-icon {
 	width: 22px;
 	height: 22px;
 	cursor: pointer;
 }
 
+/* Section d'introduction */
 #introduction {
 	display: flex;
 	align-items: center;
+	margin: 50px 0;
 }
 
 #introduction figure {
@@ -132,36 +123,81 @@ li:hover {
 
 #introduction p {
 	margin-bottom: 1.5em;
-	line-height: 16.42px;
-	color: #3D3D3D;
-	Width: 404px;
+	line-height: 1.5em;
+	width: 404px;
+}
+
+/* Section Portfolio */
+#portfolio {
+	margin: 50px 0;
+}
+
+#portfolio .title-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+	margin-bottom: 30px;
 }
 
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
-	margin-top: 5em;
+	margin: 0;
+}
+
+.edit-button {
+	display: flex;
+	align-items: center;
+	font-family: 'Work Sans', sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: #000000;
+	cursor: pointer;
+}
+
+.edit-button i {
+	margin-right: 5px;
+}
+
+#filters {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	padding: 10px 0;
+}
+
+.filter-btn {
+	padding: 10px 20px;
+	border: 2px solid #1D6154;
+	border-radius: 60px;
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 600;
+	font-size: 16px;
+	color: #1D6154;
+	background: none;
+	cursor: pointer;
+}
+
+.filter-btn.active-filter {
+	background: #1D6154;
+	color: white;
 }
 
 .gallery {
-	width: 100%;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-column-gap: 20px;
-	grid-row-gap: 20px;
-	color: #3D3D3D;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+	margin-top: 20px;
 }
 
 .gallery img {
 	width: 100%;
 }
 
+/* Section Contact */
 #contact {
 	width: 50%;
 	margin: auto;
-}
-
-#contact > * {
 	text-align: center;
 }
 
@@ -170,122 +206,76 @@ li:hover {
 }
 
 #contact form {
-	text-align: left;
 	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
-}
-
-#contact input {
-	height: 50px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
 #contact label {
 	margin: 2em 0 1em 0;
 	color: #3D3D3D;
-}
-
-#contact textarea {
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-input[type="submit"] {
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin: 2em auto;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px;
-	cursor: pointer;
-}
-
-#contact input[type="submit"]:hover {
-	background-color:#0E2F28;
-}
-
-footer {
-	background-color:#FFFFFF;
-}
-
-footer nav ul {
-	display: flex;
-	justify-content: flex-end;
-	margin: 2em;
-}
-
-/* Filters */
-
-#filters {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 20px; 
-	padding: 10px 0;
-	margin-bottom: 30px; 
-}
-
-.filter-btn {
-	display: inline-block;
-	padding: 10px 20px; 
-	border: 2px solid #1D6154;
-	border-radius: 60px; 
-	font-family: 'Work Sans', sans-serif;
-	font-size: 16px;
-	font-weight: 600;
-	color: #1D6154;
-	background: none; 
-	text-align: center;
-	white-space: nowrap; 
-	cursor: pointer;
-}
-
-.filter-btn.active-filter {
-	background: #1D6154; 
-	color: white; 
-	border: 2px solid #1D6154;
-}
-
-/* Log in page */
-
-.login-title {
-	font-family: 'Syne', sans-serif;
-	font-weight: 700;
-	font-size: 30px;
-	color: #1D6154;
-	text-align: center;
-	margin-bottom: 20px;
-}
-  
-#login {
-	width: 50%; 
-	margin: auto;
-}
-  
-#login form {
 	text-align: left;
-	margin-top: 30px;
-	display: flex;
-	flex-direction: column;
 }
-  
-#login label {
-	margin: 2em 0 1em 0;
-	color: #3D3D3D ;
-}
-  
-#login input {
+
+#contact input,
+#contact textarea {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
+	padding: 10px;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-  
+
+#contact textarea {
+	height: 150px;
+}
+
+#contact input[type="submit"] {
+	background-color: #1D6154;
+	color: white;
+	border-radius: 60px;
+	margin: 2em auto;
+	width: 180px;
+	cursor: pointer;
+	font-family: 'Syne', sans-serif;
+	font-weight: 700;
+}
+
+#contact input[type="submit"]:hover {
+	background-color: #0E2F28;
+}
+
+/* Page Log In */
+#login {
+	width: 50%;
+	margin: auto;
+}
+
+#login h2 {
+	text-align: center;
+}
+
+#login form {
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+	gap: 15px;
+}
+
+#login label {
+	margin: 1em 0 0.5em 0;
+	color: #3D3D3D;
+	font-weight: 500;
+}
+
+#login input {
+	height: 50px;
+	border: none;
+	font-size: 1.2em;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	padding: 10px;
+}
+
 #login input[type="submit"] {
 	font-family: 'Syne', sans-serif;
 	font-weight: 700;
@@ -293,41 +283,60 @@ footer nav ul {
 	background-color: #1D6154;
 	margin: 2em auto;
 	width: 180px;
-	text-align: center;
 	border-radius: 60px;
 	cursor: pointer;
 }
-  
+
 #login input[type="submit"]:hover {
-	background-color:#0E2F28;
+	background-color: #0E2F28;
 }
 
-.error-message {
-    color: #E74C3C; /* Rouge pour signaler une erreur */
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 10px;
-    display: none; /* Par défaut, caché */
-    text-align: center; /* Centré sous le formulaire */
-}
-
-.forget-password{
+.forget-password {
 	display: flex;
 	justify-content: center;
 	color: #3D3D3D;
-	text-decoration: underline #3D3D3D ;
+	text-decoration: underline;
 	font-size: 14px;
 	font-weight: 500;
-	line-height: 16.42px;
 	cursor: pointer;
+	margin-top: 10px;
 }
 
-#login-page footer {
-	margin-top: 300px; 
+/* Barre d'édition */
+.edit-bar {
+    background-color: #000000; /* Fond noir */
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    justify-content: center;
+    padding: 10px 0; /* Espacement vertical */
+    display: none; /* Par défaut cachée */
+}
+
+.edit-bar p {
+    margin: 0; /* Pas de marge autour du texte */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espace entre l'icône et le texte */
+	color: #FFFFFF;
+}
+
+.edit-bar i {
+    font-size: 16px;
+    color: #ffffff; /* Icône en blanc */
 }
 
 
+/* Footer */
+footer {
+	background-color: #FFFFFF;
+	padding: 20px 0;
+}
 
-
+footer nav ul {
+	display: flex;
+	justify-content: flex-end;
+	margin: 0;
+}
 
 
