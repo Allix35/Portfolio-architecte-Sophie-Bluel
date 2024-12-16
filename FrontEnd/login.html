@@ -17,7 +17,7 @@
         <li><a href="index.html#portfolio">projets</a></li> 
         <li><a href="index.html#contact">contact</a></li>
         <li><a href="login.html" class="nav-login">login</a></li>
-        <li><img src="./assets/icons/instagram.png" class="instagram_icon" alt="Instagram"></li>
+        <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
       </ul>
     </nav>
   </header>
@@ -25,13 +25,14 @@
   <main>
     <section id="login">
       <h2 class="login-title">Log in</h2>
-      <form action="#" method="post">
+      <form id="loginForm" action="#" method="post">
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email">       
         <label for="password">Mot de passe</label>
-        <input type="password" id="password" name="password">    
+        <input type="password" id="password" name="password">   
+        <p class="error-message" style="display: none;" aria-live="polite"></p> 
         <input type="submit" value="Se connecter">
-      </form>
+    </form>
 
       <a class="forget-password">Mot de passe oublié</a>
     </section>
@@ -44,5 +45,6 @@
       </ul>
     </nav>
   </footer>
+  <script src="./assets/script.js"></script>
 </body>
 </html>

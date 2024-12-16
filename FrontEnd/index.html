@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr"> -->
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Sophie Bluel - Architecte d'intérieur</title>
+  <title>Homepage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,22 +10,25 @@
   <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+  <!-- En-tête -->
   <header>
     <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
     <nav>
       <ul>
-        <li><a href="#portfolio">projets</a></li> 
+        <li><a href="#portfolio">projets</a></li>
         <li><a href="#contact">contact</a></li>
-        <li><a href="login.html">login</a></li>
-        <li><img src="./assets/icons/instagram.png" class="instagram_icon" alt="Instagram"></li>
+        <li id="login"><a href="login.html">login</a></li>
+        <li id="logout"><a href="#">logout</a></li>
+        <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
       </ul>
     </nav>
   </header>
 
+  <!-- Section d'introduction -->
   <main>
     <section id="introduction">
       <figure>
-        <img src="./assets/images/sophie-bluel.png" alt="Sophie Bluel">
+        <img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel">
       </figure>
       <article>
         <h2>Designer d'espace</h2>
@@ -35,15 +38,18 @@
       </article>
     </section>
 
+    <!-- Section portfolio -->
     <section id="portfolio">
       <h2>Mes Projets</h2>
-      <div id="filters"></div> 
-		<!-- Filtres générés dynamiquement -->
+      <div id="filters">
+        <!-- Boutons de filtres générés dynamiquement -->
+      </div>
       <div class="gallery">
         <!-- Galerie générée dynamiquement -->
       </div>
     </section>
 
+    <!-- Section contact -->
     <section id="contact">
       <h2>Contact</h2>
       <p>Vous avez un projet ? Discutons-en !</p>
@@ -59,16 +65,22 @@
     </section>
   </main>
 
+  <!-- Pied de page -->
   <footer>
     <nav>
       <ul>
-        <li>Mentions Légales</li>
+        <li><a href="#">Mentions légales</a></li>
       </ul>
     </nav>
   </footer>
 
+  <!-- Lien vers le fichier JavaScript -->
   <script src="./assets/script.js"></script>
-</body> 
+</body>
 </html>
+
+
+
+
 
 
