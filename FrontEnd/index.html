@@ -8,95 +8,102 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/style.css">
-    <!-- Importation de Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   </head>
-<body>
-  <!-- Barre d'édition (masquée par défaut) -->
-  <div class="edit-bar" style="display: none;">
-    <p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>
-  </div>
+  <body>
+    <!-- Barre d'édition visible uniquement en mode administrateur -->
+    <div class="edit-bar" style="display: none;">
+      <p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>
+    </div>
 
-  <!-- En-tête -->
-  <header>
-    <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
-    <nav>
-      <ul>
-        <li><a href="#portfolio">projets</a></li>
-        <li><a href="#contact">contact</a></li>
-        <li id="login"><a href="login.html">login</a></li>
-        <li id="logout" style="display: none;"><a href="#">logout</a></li>
-        <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- En-tête -->
+    <header>
+      <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
+      <nav>
+        <ul>
+          <li><a href="#portfolio">Projets</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li id="login"><a href="login.html">Login</a></li>
+          <li id="logout" style="display: none;"><a href="#">Logout</a></li>
+          <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
+        </ul>
+      </nav>
+    </header>
 
-  <!-- Section d'introduction -->
-  <main>
-    <section id="introduction">
-      <figure>
-        <img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel">
-      </figure>
-      <article>
-        <h2>Designer d'espace</h2>
-        <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-        <p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-        <p>En cas de besoin, une équipe pluridisciplinaire peut être constituée : architecte DPLG, décorateur(trice).</p>
-      </article>
-    </section>
+    <!-- Contenu principal -->
+    <main>
+      <!-- Section introduction -->
+      <section id="introduction">
+        <figure>
+          <img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel">
+        </figure>
+        <article>
+          <h2>Designer d'espace</h2>
+          <p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
+          <p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+          <p>En cas de besoin, une équipe pluridisciplinaire peut être constituée : architecte DPLG, décorateur(trice).</p>
+        </article>
+      </section>
 
-    <!-- Section portfolio -->
-    <section id="portfolio">
-      <div class="title-container">
-        <h2>Mes projets</h2>
-        <a href="#" class="edit-button" style="display: none;">
-          <i class="fa-regular fa-pen-to-square"></i> modifier
-        </a>
+      <!-- Section portfolio -->
+      <section id="portfolio">
+        <div class="title-container">
+          <h2>Mes projets</h2>
+          <a href="#" id="edit-button" class="edit-button" style="display: none;">
+            <i class="fa-regular fa-pen-to-square"></i> Modifier
+          </a>
+        </div>
+        <div id="filters">
+          <!-- Boutons de filtres générés dynamiquement par JavaScript -->
+        </div>
+        <div class="gallery">
+          <!-- Galerie générée dynamiquement par JavaScript -->
+        </div>
+      </section>
+
+      <!-- Fenêtre modale -->
+      <div class="modal" id="project-modal" style="display: none;">
+        <div class="modal-content">
+          <!-- Bouton pour fermer la modale -->
+          <button class="modal-close">&times;</button>
+          <h2 class="modal-title">Galerie photo</h2>
+          <!-- Grille d'images -->
+          <div class="gallery-grid">
+            <!-- Images dynamiques générées par JavaScript -->
+          </div>
+          <div class="separator-line"></div>
+          <!-- Bouton pour ajouter une photo -->
+          <button class="add-photo-btn">Ajouter une photo</button>
+        </div>
       </div>
-      <div id="filters">
-        <!-- Boutons de filtres -->
-      </div>
-      <div class="gallery">
-        <!-- Galerie -->
-      </div>
-    </section>
 
-    <!-- Section contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Vous avez un projet ? Discutons-en !</p>
-      <form action="#" method="post">
-        <label for="name">Nom</label>
-        <input type="text" name="name" id="name">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email">
-        <label for="message">Message</label>
-        <textarea name="message" id="message" cols="30" rows="10"></textarea>
-        <input type="submit" value="Envoyer">
-      </form>
-    </section>
-  </main>
+      <!-- Section contact -->
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Vous avez un projet ? Discutons-en !</p>
+        <form action="#" method="post">
+          <label for="name">Nom</label>
+          <input type="text" name="name" id="name" required>
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" required>
+          <label for="message">Message</label>
+          <textarea name="message" id="message" cols="30" rows="10" required></textarea>
+          <input type="submit" value="Envoyer">
+        </form>
+      </section>
+    </main>
 
-  <!-- Pied de page -->
-  <footer>
-    <nav>
-      <ul>
-        <li><a href="#">Mentions légales</a></li>
-      </ul>
-    </nav>
-  </footer>
+    <!-- Pied de page -->
+    <footer>
+      <nav>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+        </ul>
+      </nav>
+    </footer>
 
-  <!-- Lien vers le fichier JavaScript -->
-  <script src="./assets/script.js"></script>
-</body>
+    <!-- Inclusion du script JavaScript -->
+    <script src="./assets/script.js"></script>
+  </body>
 </html>
-
-
-
-
-
-
 
