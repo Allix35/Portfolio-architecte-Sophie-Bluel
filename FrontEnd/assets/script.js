@@ -183,7 +183,7 @@ async function loginUser(email, password) {
 }
 
 // ==================================
-// Étape 3 : Gestion de la modale
+// Étape 3 : Gestion de la modale et bouton Ajouter photo
 // ==================================
 
 function displayModalGallery(gallery) {
@@ -297,6 +297,42 @@ function setupAddPhotoModal() {
     });
 }
 
+function setupImageUpload() {
+    const uploadButton = document.querySelector(".upload-button");
+
+    if (uploadButton) {
+        uploadButton.addEventListener("click", () => {
+            const fileInput = document.createElement("input");
+            fileInput.type = "file";
+            fileInput.accept = "image/png, image/jpeg";
+
+            fileInput.addEventListener("change", (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    console.log("Fichier sélectionné :", file.name);
+
+                    // Exemple d'aperçu
+                    const previewContainer = document.querySelector(".upload-preview");
+                    if (previewContainer) {
+                        previewContainer.innerHTML = "";
+                        const img = document.createElement("img");
+                        img.src = URL.createObjectURL(file);
+                        img.style.maxWidth = "100%";
+                        img.style.height = "auto";
+                        previewContainer.appendChild(img);
+                    }
+                } else {
+                    console.log("Aucun fichier sélectionné.");
+                }
+            });
+
+            fileInput.click();
+        });
+    } else {
+        console.error("Bouton Ajouter photo introuvable !");
+    }
+}
+
 // ==================================
 // Initialisation
 // ==================================
@@ -319,10 +355,17 @@ async function work() {
 function init() {
     setupLoginForm();
     setupAddPhotoModal();
+    setupImageUpload(); // Bouton bleu pour ajouter une photo
     work();
 }
 
 init();
+
+
+
+
+
+
 
 
 

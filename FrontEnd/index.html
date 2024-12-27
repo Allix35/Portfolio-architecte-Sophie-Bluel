@@ -93,18 +93,20 @@
               </div>
           </div>
           
-            <form id="add-photo-form">
-              <label for="image">Ajouter une image</label>
-              <input type="file" id="image" name="image" accept="image/png, image/jpeg" required>
-              
-              <label for="title">Titre</label>
-              <input type="text" id="title" name="title" required>
-              
-              <label for="category-select">Catégorie</label>
-              <select id="category-select" name="category" required>
-                <option value="" disabled selected>Choisissez une catégorie</option>
-                <!-- Options générées dynamiquement -->
-              </select>
+          <div class="form-fields">
+            <div class="form-group">
+                <label for="title">Titre</label>
+                <input type="text" id="title" name="title" placeholder="Entrez un titre" required>
+            </div>
+            <div class="form-group">
+                <label for="category-select">Catégorie</label>
+                <select id="category-select" name="category" required>
+                    <option value="" disabled selected>Choisissez une catégorie</option>
+                    <!-- Options générées dynamiquement par JavaScript -->
+                </select>
+            </div>
+        </div>
+        <div class="separator-line"></div>        
               
               <button type="submit" class="validate-btn">Valider</button>
             </form>
