@@ -21,10 +21,10 @@
       <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
       <nav>
         <ul>
-          <li><a href="#portfolio">Projets</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li id="login"><a href="login.html">Login</a></li>
-          <li id="logout" style="display: none;"><a href="#">Logout</a></li>
+          <li><a href="#portfolio">projets</a></li>
+          <li><a href="#contact">contact</a></li>
+          <li id="login"><a href="login.html">login</a></li>
+          <li id="logout" style="display: none;"><a href="#">logout</a></li>
           <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
         </ul>
       </nav>
@@ -65,15 +65,42 @@
       <div class="modal" id="project-modal" style="display: none;">
         <div class="modal-content">
           <!-- Bouton pour fermer la modale -->
-          <button class="modal-close">&times;</button>
-          <h2 class="modal-title">Galerie photo</h2>
-          <!-- Grille d'images -->
-          <div class="gallery-grid">
-            <!-- Images dynamiques générées par JavaScript -->
+          <button class="modal-close" aria-label="Fermer la modale">
+            &times;
+          </button>
+          
+          <!-- Vue principale de la modale -->
+          <div class="modal-view" id="modal-view-main">
+            <h2 class="modal-title">Galerie photo</h2>
+            <div class="gallery-grid">
+              <!-- Images dynamiques -->
+            </div>
+            <div class="separator-line"></div>
+            <button class="add-photo-btn">Ajouter une photo</button>
           </div>
-          <div class="separator-line"></div>
-          <!-- Bouton pour ajouter une photo -->
-          <button class="add-photo-btn">Ajouter une photo</button>
+
+          <!-- Vue pour ajouter une photo -->
+          <div class="modal-view" id="modal-view-add" style="display: none;">
+            <button id="back-to-main" class="back-button" aria-label="Retour">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <h2 class="modal-title">Ajout photo</h2>
+            <form id="add-photo-form">
+              <label for="image">Ajouter une image</label>
+              <input type="file" id="image" name="image" accept="image/png, image/jpeg" required>
+              
+              <label for="title">Titre</label>
+              <input type="text" id="title" name="title" required>
+              
+              <label for="category-select">Catégorie</label>
+              <select id="category-select" name="category" required>
+                <option value="" disabled selected>Choisissez une catégorie</option>
+                <!-- Options générées dynamiquement -->
+              </select>
+              
+              <button type="submit" class="validate-btn">Valider</button>
+            </form>
+          </div>
         </div>
       </div>
 
@@ -106,4 +133,16 @@
     <script src="./assets/script.js"></script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
