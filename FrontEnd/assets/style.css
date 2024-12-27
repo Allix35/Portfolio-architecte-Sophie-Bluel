@@ -462,6 +462,81 @@ li:hover {
     background-color: #14493d;
 }
 
+/* Zone de téléchargement d'image */
+.upload-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #F0F4FA;
+    border: 2px dashed #D1DCE5;
+    border-radius: 8px;
+}
+
+.upload-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.upload-preview i {
+    font-size: 40px;
+    color: #A9B9C9;
+    margin-bottom: 10px;
+}
+
+.upload-button {
+    background-color: #4F91D6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.upload-button:hover {
+    background-color: #3B7EC4;
+}
+
+.upload-instructions {
+    font-size: 12px;
+    color: #7A8A9C;
+}
+
+.category-indicators {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.category-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    background-color: #F8CFD0;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+}
+
+.category-count {
+    font-size: 12px;
+    color: #A9B9C9;
+    font-weight: bold;
+}
+
+
+
 
 
 
