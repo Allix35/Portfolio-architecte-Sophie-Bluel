@@ -334,18 +334,162 @@ function setupImageUpload() {
 }
 
 // ==================================
+// Étape 1 : Récupération des travaux et affichage
+// ==================================
+
+async function fetchGallery() {
+    const url = "http://localhost:5678/api/works";
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Erreur : ${response.status}`);
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        console.error("Erreur lors de la récupération des travaux :", error.message);
+        return [];
+    }
+}
+
+function displayModalGallery(gallery) {
+    const modalGalleryContainer = document.querySelector(".gallery-grid");
+    if (!modalGalleryContainer) {
+        console.error("Le conteneur .gallery-grid est introuvable !");
+        return;
+    }
+
+    modalGalleryContainer.innerHTML = "";
+    gallery.forEach((work) => {
+        const figure = document.createElement("figure");
+
+        const img = document.createElement("img");
+        img.src = work.imageUrl;
+        img.alt = work.title;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+        figure.appendChild(img);
+        figure.appendChild(deleteBtn);
+        modalGalleryContainer.appendChild(figure);
+    });
+}
+
+// ==================================
+// Étape 2 : Gestion des vues modales
+// ==================================
+
+function setupAddPhotoModal() {
+    const addPhotoButton = document.querySelector(".add-photo-btn");
+    const backButton = document.querySelector("#back-to-main");
+    const modalMainView = document.querySelector("#modal-view-main");
+    const modalAddView = document.querySelector("#modal-view-add");
+    const closeButton = document.querySelector(".modal-close");
+
+    if (addPhotoButton) {
+        addPhotoButton.addEventListener("click", () => {
+            modalMainView.style.display = "none";
+            modalAddView.style.display = "block";
+            populateCategorySelect(); // Charger les catégories dynamiquement
+        });
+    }
+
+    if (backButton) {
+        backButton.addEventListener("click", () => {
+            modalMainView.style.display = "block";
+            modalAddView.style.display = "none";
+        });
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener("click", () => {
+            const modal = document.getElementById("project-modal");
+            modal.style.display = "none";
+        });
+    }
+}
+
+// ==================================
+// Étape 3 : Gestion du bouton Valider
+// ==================================
+
+function setupValidateButton() {
+    const validateButton = document.querySelector(".validate-btn");
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/png, image/jpeg";
+
+    const imagePreview = document.querySelector(".upload-preview");
+    const titleInput = document.getElementById("title");
+    const categorySelect = document.getElementById("category-select");
+
+    fileInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file && imagePreview) {
+            imagePreview.innerHTML = "";
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+            img.style.maxWidth = "100%";
+            imagePreview.appendChild(img);
+        }
+    });
+
+    imagePreview.addEventListener("click", () => {
+        fileInput.click();
+    });
+
+    validateButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const file = fileInput.files[0];
+        const title = titleInput.value.trim();
+        const category = categorySelect.value;
+
+        if (!file || !title || !category) {
+            alert("Veuillez remplir tous les champs.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", file);
+        formData.append("title", title);
+        formData.append("category", category);
+
+        try {
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem("Token")}`,
+                },
+                body: formData,
+            });
+
+            if (response.ok) {
+                alert("Photo ajoutée avec succès !");
+                const gallery = await fetchGallery();
+                displayGallery(gallery); // Met à jour la galerie principale
+                displayModalGallery(gallery); // Met à jour la galerie modale
+                const modal = document.getElementById("project-modal");
+                modal.style.display = "none"; // Ferme la modale
+            } else {
+                alert("Erreur lors de l'ajout de la photo.");
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'ajout de la photo :", error.message);
+        }
+    });
+}
+
+// ==================================
 // Initialisation
 // ==================================
 
 async function work() {
     try {
         const gallery = await fetchGallery();
-        const categories = await fetchCategories();
 
-        displayGallery(gallery); // Afficher la galerie principale
-        displayFilters(categories, gallery); // Afficher les filtres
-        displayModalGallery(gallery); // Afficher la galerie dans la modale
-
+        displayGallery(gallery); // Galerie principale
+        displayModalGallery(gallery); // Galerie dans la modale
         manageAdminElements();
     } catch (error) {
         console.error("Erreur lors de l'initialisation :", error.message);
@@ -353,13 +497,13 @@ async function work() {
 }
 
 function init() {
-    setupLoginForm();
-    setupAddPhotoModal();
-    setupImageUpload(); // Bouton bleu pour ajouter une photo
     work();
+    setupAddPhotoModal();
+    setupValidateButton();
 }
 
 init();
+
 
 
 
