@@ -107,40 +107,80 @@ function manageAdminElements() {
 
         logoutButton.addEventListener("click", () => {
             sessionStorage.clear();
-            window.location.replace("index.html");
+            window.location.reload();
         });
     }
     if (adminBar) adminBar.style.display = isConnected ? "flex" : "none";
     if (editButton) {
         editButton.style.display = isConnected ? "inline-flex" : "none";
-        editButton.addEventListener("click", openModal);
+        editButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            openModal();
+        });
+    }
+}
+
+function setupLoginForm() {
+    const loginForm = document.querySelector("#loginForm");
+    if (!loginForm) {
+        console.error("Le formulaire de connexion n'existe pas !");
+        return;
+    }
+
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.querySelector("#email").value.trim();
+        const password = document.querySelector("#password").value.trim();
+        const errorMessage = document.querySelector(".error-message");
+
+        if (!email || !password) {
+            errorMessage.textContent = "Veuillez remplir tous les champs.";
+            errorMessage.style.display = "block";
+            return;
+        }
+
+        try {
+            const success = await loginUser(email, password);
+            if (success) {
+                window.location.reload();
+            } else {
+                errorMessage.textContent = "Erreur dans l’identifiant ou le mot de passe.";
+                errorMessage.style.display = "block";
+            }
+        } catch (error) {
+            errorMessage.textContent = "Erreur de connexion au serveur.";
+            errorMessage.style.display = "block";
+        }
+    });
+}
+
+async function loginUser(email, password) {
+    const url = "http://localhost:5678/api/users/login";
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            sessionStorage.setItem("Token", data.token);
+            sessionStorage.setItem("isConnected", "true");
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error("Erreur lors de la tentative de connexion :", error.message);
+        throw error;
     }
 }
 
 // ==================================
-// Étape 3 : Gestion de la modale
+// Étape 3 : Gestion de la modale et suppression
 // ==================================
-
-function openModal() {
-    const modal = document.getElementById("project-modal");
-    const modalMainView = document.querySelector("#modal-view-main");
-    const modalAddView = document.querySelector("#modal-view-add");
-
-    if (modal && modalMainView && modalAddView) {
-        modal.style.display = "flex";
-        modalMainView.style.display = "block";
-        modalAddView.style.display = "none";
-    } else {
-        console.error("La modale n'a pas pu être ouverte !");
-    }
-}
-
-function closeModal() {
-    const modal = document.getElementById("project-modal");
-    if (modal) {
-        modal.style.display = "none";
-    }
-}
 
 function displayModalGallery(gallery) {
     const modalGalleryContainer = document.querySelector(".gallery-grid");
@@ -194,48 +234,57 @@ async function handleDeletePhoto(workId) {
 }
 
 // ==================================
-// Étape 4 : Gestion de l'ajout de photo
+// Étape 4 : Gestion des vues modales
 // ==================================
+
+function openModal() {
+    const modal = document.getElementById("project-modal");
+    const modalMainView = document.querySelector("#modal-view-main");
+    const modalAddView = document.querySelector("#modal-view-add");
+
+    if (modal && modalMainView && modalAddView) {
+        modal.style.display = "flex";
+        modalMainView.style.display = "block";
+        modalAddView.style.display = "none";
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById("project-modal");
+    if (modal) modal.style.display = "none";
+}
 
 function setupAddPhotoModal() {
     const addPhotoButton = document.querySelector(".add-photo-btn");
     const backButton = document.querySelector("#back-to-main");
-    const modalMainView = document.querySelector("#modal-view-main");
-    const modalAddView = document.querySelector("#modal-view-add");
 
-    if (addPhotoButton) {
-        addPhotoButton.addEventListener("click", () => {
-            modalMainView.style.display = "none";
-            modalAddView.style.display = "block";
-            populateCategorySelect();
-        });
-    }
+    addPhotoButton.addEventListener("click", () => {
+        document.querySelector("#modal-view-main").style.display = "none";
+        document.querySelector("#modal-view-add").style.display = "block";
+        populateCategorySelect();
+    });
 
-    if (backButton) {
-        backButton.addEventListener("click", () => {
-            modalMainView.style.display = "block";
-            modalAddView.style.display = "none";
-        });
-    }
-}
-
-function populateCategorySelect() {
-    const categorySelect = document.getElementById("category-select");
-    if (!categorySelect) {
-        console.error("Le sélecteur de catégories est introuvable !");
-        return;
-    }
-
-    fetchCategories().then((categories) => {
-        categorySelect.innerHTML = `<option value="" disabled selected>Choisissez une catégorie</option>`;
-        categories.forEach((category) => {
-            const option = document.createElement("option");
-            option.value = category.id;
-            option.textContent = category.name;
-            categorySelect.appendChild(option);
-        });
+    backButton.addEventListener("click", () => {
+        document.querySelector("#modal-view-main").style.display = "block";
+        document.querySelector("#modal-view-add").style.display = "none";
     });
 }
+
+async function populateCategorySelect() {
+    const categorySelect = document.getElementById("category-select");
+    categorySelect.innerHTML = '<option value="" disabled selected>Choisissez une catégorie</option>';
+    const categories = await fetchCategories();
+    categories.forEach((category) => {
+        const option = document.createElement("option");
+        option.value = category.id;
+        option.textContent = category.name;
+        categorySelect.appendChild(option);
+    });
+}
+
+// ==================================
+// Étape 5 : Ajout de photos
+// ==================================
 
 function setupValidateButton() {
     const validateButton = document.querySelector(".validate-btn");
@@ -247,19 +296,17 @@ function setupValidateButton() {
     const titleInput = document.getElementById("title");
     const categorySelect = document.getElementById("category-select");
 
-    fileInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
-        if (file && imagePreview) {
+    imagePreview.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
             imagePreview.innerHTML = "";
             const img = document.createElement("img");
             img.src = URL.createObjectURL(file);
             img.style.maxWidth = "100%";
             imagePreview.appendChild(img);
         }
-    });
-
-    imagePreview.addEventListener("click", () => {
-        fileInput.click();
     });
 
     validateButton.addEventListener("click", async (e) => {
@@ -280,10 +327,11 @@ function setupValidateButton() {
         formData.append("category", category);
 
         try {
+            const token = sessionStorage.getItem("Token");
             const response = await fetch("http://localhost:5678/api/works", {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem("Token")}`,
+                    Authorization: `Bearer ${token}`,
                 },
                 body: formData,
             });
@@ -292,12 +340,16 @@ function setupValidateButton() {
                 const gallery = await fetchGallery();
                 displayGallery(gallery);
                 displayModalGallery(gallery);
+
+                // Réinitialise uniquement le nécessaire
+                titleInput.value = "";
+                categorySelect.selectedIndex = 0;
+                imagePreview.innerHTML = "";
+
                 closeModal();
-            } else {
-                console.error("Erreur lors de l'ajout de la photo :", response.status);
             }
         } catch (error) {
-            console.error("Erreur lors de l'ajout :", error.message);
+            console.error("Erreur lors de l'ajout de la photo :", error.message);
         }
     });
 }
@@ -307,26 +359,30 @@ function setupValidateButton() {
 // ==================================
 
 async function work() {
-    try {
-        const gallery = await fetchGallery();
-        const categories = await fetchCategories();
+    const gallery = await fetchGallery();
+    const categories = await fetchCategories();
 
-        displayGallery(gallery);
-        displayFilters(categories, gallery);
-        displayModalGallery(gallery);
-        manageAdminElements();
-    } catch (error) {
-        console.error("Erreur lors de l'initialisation :", error.message);
-    }
+    displayGallery(gallery);
+    displayFilters(categories, gallery);
+    displayModalGallery(gallery);
+    manageAdminElements();
 }
 
 function init() {
+    setupLoginForm();
     work();
     setupAddPhotoModal();
     setupValidateButton();
+    document.querySelector(".modal-close").addEventListener("click", closeModal);
+    window.addEventListener("click", (e) => {
+        if (e.target.id === "project-modal") closeModal();
+    });
 }
 
 init();
+
+
+
 
 
 
