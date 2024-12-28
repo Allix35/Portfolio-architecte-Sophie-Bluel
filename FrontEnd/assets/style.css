@@ -632,7 +632,11 @@ li:hover {
     border: none;
 }
 
-
+footer {
+    display: flex;
+    justify-content: flex-end; /* Aligne les enfants à droite */
+    margin-bottom: 30px;
+}
 
 
 
