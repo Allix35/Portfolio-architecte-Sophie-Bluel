@@ -272,7 +272,16 @@ function setupAddPhotoModal() {
 
 async function populateCategorySelect() {
     const categorySelect = document.getElementById("category-select");
-    categorySelect.innerHTML = '<option value="" disabled selected>Choisissez une catégorie</option>';
+    categorySelect.innerHTML = ''; // Vider les options existantes
+
+    // Ajouter une option par défaut vide
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    categorySelect.appendChild(defaultOption);
+
+    // Charger les catégories depuis l'API
     const categories = await fetchCategories();
     categories.forEach((category) => {
         const option = document.createElement("option");
@@ -281,6 +290,9 @@ async function populateCategorySelect() {
         categorySelect.appendChild(option);
     });
 }
+
+
+
 
 // ==================================
 // Étape 5 : Ajout de photos

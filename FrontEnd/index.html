@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+    <!-- Optimisation : fusion de Work Sans avec les poids demandés -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Lien vers votre feuille de style locale -->
     <link rel="stylesheet" href="./assets/style.css">
+    <!-- Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-  </head>
+</head>
+
   <body>
     <!-- Barre d'édition visible uniquement en mode administrateur -->
     <div class="edit-bar" style="display: none;">
@@ -87,7 +91,7 @@
             <h2 class="modal-title">Ajout photo</h2>
             <div class="upload-zone">
               <div class="upload-preview">
-                  <i class="fa-solid fa-image"></i>
+                  <i class="fa-regular fa-image"></i>
                   <button type="button" class="upload-button">+ Ajouter photo</button>
                   <p class="upload-instructions">jpg, png : 4mo max</p>
               </div>
@@ -96,7 +100,7 @@
           <div class="form-fields">
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" placeholder="Entrez un titre" required>
+                <input type="text" id="title" name="title" required>
             </div>
             <div class="form-group">
                 <label for="category-select">Catégorie</label>
