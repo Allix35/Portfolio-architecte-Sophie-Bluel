@@ -176,33 +176,34 @@ li:hover {
 }
 
 /* Barre d'édition (Edit Bar) */
+
 .edit-bar {
-    background-color: #000000; /* Fond noir */
+    background-color: #000000; 
     font-family: 'Work Sans', sans-serif;
     font-size: 16px;
-    color: #FFFFFF; /* Texte blanc */
+    color: #FFFFFF; 
     display: flex;
-    justify-content: center; /* Centre le contenu horizontalement */
-    align-items: center; /* Centre le contenu verticalement */
-    padding: 10px 0; /* Espacement en haut et en bas */
-    z-index: 100; /* Toujours visible au-dessus */
-    position: fixed; /* Reste en haut de la page */
+    justify-content: center; 
+    align-items: center; 
+    padding: 10px 0; 
+    z-index: 100; 
+    position: fixed; 
     top: 0;
-    width: 100%; /* S'étend sur toute la largeur */
+    width: 100%; 
 }
 
 .edit-bar p {
-    margin: 0; /* Supprime les marges */
+    margin: 0; 
     display: flex;
     align-items: center;
-    gap: 10px; /* Espacement entre l'icône et le texte */
+    gap: 10px; 
     text-align: center;
     color: #FFFFFF; 
 }
 
 .edit-bar i {
     font-size: 16px;
-    color: #FFFFFF; /* Icône blanche */
+    color: #FFFFFF; 
 }
 
 
@@ -496,7 +497,7 @@ li:hover {
     padding: 20px;
     margin-bottom: 20px;
     background-color: #E8F1F6;
-    border: 2px dashed #D1DCE5;
+    border: 2px;
     width: 420px;
     height: 169px;
     top: 786px;
@@ -516,6 +517,12 @@ li:hover {
     font-size: 40px;
     color: #A9B9C9;
     margin-bottom: 10px;
+}
+
+.upload-preview img {
+    max-width: 100%; 
+    max-height: 200px; 
+    object-fit: cover; 
 }
 
 .upload-button {
@@ -622,6 +629,7 @@ li:hover {
     font-size: 14px;
     font-weight: 700;
     text-align: center;
+    border: none;
 }
 
 
