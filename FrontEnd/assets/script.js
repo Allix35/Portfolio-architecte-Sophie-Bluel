@@ -2,6 +2,8 @@
 // Étape 1 : Récupération des travaux et affichage
 
 
+// Étape 1 : Récupération des travaux et affichage
+
 async function fetchGallery() {
     const url = "http://localhost:5678/api/works";
     try {
@@ -143,7 +145,8 @@ function setupLoginForm() {
         try {
             const success = await loginUser(email, password);
             if (success) {
-                window.location.reload();
+                sessionStorage.setItem("isConnected", "true");
+                window.location.href = "index.html"; // Rediriger après connexion
             } else {
                 errorMessage.textContent = "Erreur dans l’identifiant ou le mot de passe.";
                 errorMessage.style.display = "block";
@@ -424,56 +427,43 @@ function setupValidateButton() {
 
 // Initialisation
 
-
 document.addEventListener("DOMContentLoaded", () => {
-    init();
-});
+    const pageType = document.body.dataset.page; // Identifier la page via `data-page`
 
-function init() {
-    // Charge la gestion du formulaire de connexion
-    setupLoginForm();
+    if (pageType === "login") {
+        // Charge uniquement le formulaire de connexion pour la page de connexion
+        setupLoginForm();
+    } else if (pageType === "main") {
+        // Charge toutes les fonctionnalités pour la page principale
+        work();
+        manageAdminElements();
+        setupAddPhotoModal();
+        setupValidateButton();
 
-    // Charge la galerie et les éléments nécessaires
-    work();
+        const closeButton = document.querySelector(".modal-close");
+        if (closeButton) {
+            closeButton.addEventListener("click", closeModal);
+        }
 
-    // Configure les interactions modales
-    setupAddPhotoModal();
-    setupValidateButton();
-
-    // Gère les éléments administratifs pour le mode connecté
-    manageAdminElements();
-
-    // Configure la fermeture des modales
-    const closeButton = document.querySelector(".modal-close");
-    if (closeButton) {
-        closeButton.addEventListener("click", closeModal);
+        window.addEventListener("click", (e) => {
+            if (e.target.id === "project-modal") closeModal();
+        });
     }
-
-    // Ferme la modale si clic hors de la fenêtre
-    window.addEventListener("click", (e) => {
-        if (e.target.id === "project-modal") closeModal();
-    });
-}
+});
 
 async function work() {
     try {
-        const gallery = await fetchGallery(); 
-        const categories = await fetchCategories(); 
-        const isConnected = sessionStorage.getItem("isConnected") === "true"; // Vérifie la connexion
+        const gallery = await fetchGallery();
+        const categories = await fetchCategories();
+        const isConnected = sessionStorage.getItem("isConnected") === "true";
 
-        // Affiche la galerie dans tous les cas
         if (gallery.length) displayGallery(gallery);
 
-        // Si l'utilisateur n'est PAS connecté, afficher les filtres
         if (!isConnected && categories.length) {
             displayFilters(categories, gallery);
         }
 
-        // Gérer l'affichage dans la modale
         if (gallery.length) displayModalGallery(gallery);
-
-        // Gérer les éléments administratifs en mode connecté
-        manageAdminElements();
     } catch (error) {
         console.error("Erreur lors du chargement principal :", error.message);
     }

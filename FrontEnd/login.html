@@ -10,39 +10,40 @@
     <link rel="stylesheet" href="./assets/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   </head>
-<body id="login-page">
-  <header>
-    <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
-    <nav>
-      <ul>
-        <li><a href="index.html#portfolio">projets</a></li> 
-        <li><a href="index.html#contact">contact</a></li>
-        <li><a href="login.html" class="nav-login">login</a></li>
-        <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section id="login">
-      <h2 class="login-title">Log in</h2>
-      <form id="loginForm" action="#" method="post">
-        <label for="email">E-mail</label>
-        <input type="email" id="email" name="email">       
-        <label for="password">Mot de passe</label>
-        <input type="password" id="password" name="password">   
-        <p class="error-message" style="display: none;" aria-live="polite"></p> 
-        <input type="submit" value="Se connecter">
-    </form>
-      <a class="forget-password">Mot de passe oublié</a>
-    </section>
-  </main>
-  <footer>
-    <nav>
-      <ul>
-        <li>Mentions Légales</li>
-      </ul>
-    </nav>
-  </footer>
-  <script src="./assets/script.js"></script>
-</body>
+  <body data-page="login">
+    <header>
+      <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
+      <nav>
+        <ul>
+          <li><a href="index.html#portfolio">projets</a></li> 
+          <li><a href="index.html#contact">contact</a></li>
+          <li><a href="login.html" class="nav-login">login</a></li>
+          <li><img src="./assets/icons/instagram.png" class="instagram-icon" alt="Instagram"></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="login">
+        <h2 class="login-title">Log in</h2>
+        <form id="loginForm" action="#" method="post">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required>       
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" required>   
+          <p class="error-message" style="display: none;" aria-live="polite"></p> 
+          <input type="submit" value="Se connecter">
+        </form>
+        <a class="forget-password" href="#">Mot de passe oublié</a>
+      </section>
+    </main>
+    <footer>
+      <nav>
+        <ul>
+          <li><a href="#">Mentions Légales</a></li>
+        </ul>
+      </nav>
+    </footer>
+    <script src="./assets/script.js"></script>
+  </body>
 </html>
+
