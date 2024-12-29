@@ -1,7 +1,6 @@
 
-// ==================================
 // Étape 1 : Récupération des travaux et affichage
-// ==================================
+
 
 async function fetchGallery() {
     const url = "http://localhost:5678/api/works";
@@ -90,9 +89,9 @@ function toggleActiveFilter(activeButton) {
     activeButton.classList.add("active-filter");
 }
 
-// ==================================
+
 // Étape 2 : Gestion de la connexion
-// ==================================
+
 
 function manageAdminElements() {
     const isConnected = sessionStorage.getItem("isConnected") === "true";
@@ -179,9 +178,9 @@ async function loginUser(email, password) {
     }
 }
 
-// ==================================
+
 // Étape 3 : Gestion de la modale et suppression
-// ==================================
+
 
 function displayModalGallery(gallery) {
     const modalGalleryContainer = document.querySelector(".gallery-grid");
@@ -209,8 +208,23 @@ function displayModalGallery(gallery) {
     });
 }
 
+function showMessage(message, type = "success") {
+    const messageContainer = document.querySelector(".message-container");
+    if (!messageContainer) return;
+
+    messageContainer.textContent = message;
+    messageContainer.className = `message-container ${type}`; // Ajoute une classe pour styliser le message
+    messageContainer.style.display = "block";
+
+    // Cache le message après 3 secondes
+    setTimeout(() => {
+        messageContainer.style.display = "none";
+    }, 3000);
+}
+
 async function handleDeletePhoto(workId) {
-    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette photo ?");
+    // Demander la confirmation via une ligne HTML personnalisée ou un prompt amélioré
+    const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cette photo ?");
     if (!confirmation) return;
 
     try {
@@ -226,17 +240,19 @@ async function handleDeletePhoto(workId) {
             const gallery = await fetchGallery();
             displayGallery(gallery);
             displayModalGallery(gallery);
+            showMessage("Photo supprimée avec succès !", "success");
         } else {
-            console.error("Erreur lors de la suppression :", response.status);
+            showMessage(`Erreur lors de la suppression : ${response.statusText}`, "error");
         }
     } catch (error) {
-        console.error("Erreur lors de la tentative de suppression :", error.message);
+        showMessage(`Erreur lors de la tentative de suppression : ${error.message}`, "error");
     }
 }
 
-// ==================================
+
+
 // Étape 4 : Gestion des vues modales
-// ==================================
+
 
 function openModal() {
     const modal = document.getElementById("project-modal");
@@ -273,16 +289,14 @@ function setupAddPhotoModal() {
 
 async function populateCategorySelect() {
     const categorySelect = document.getElementById("category-select");
-    categorySelect.innerHTML = ''; // Vider les options existantes
+    categorySelect.innerHTML = ''; 
 
-    // Ajouter une option par défaut vide
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.disabled = true;
     defaultOption.selected = true;
     categorySelect.appendChild(defaultOption);
 
-    // Charger les catégories depuis l'API
     const categories = await fetchCategories();
     categories.forEach((category) => {
         const option = document.createElement("option");
@@ -293,11 +307,8 @@ async function populateCategorySelect() {
 }
 
 
+// Ajout de photos avec mise à jour dynamique
 
-
-// ==================================
-// Étape 5 : Ajout de photos avec mise à jour dynamique
-// ==================================
 
 function addProjectToGallery(work) {
     const galleryContainer = document.querySelector(".gallery");
@@ -368,7 +379,7 @@ function setupValidateButton() {
         const category = categorySelect.value;
 
         if (!file || !title || !category) {
-            alert("Veuillez remplir tous les champs.");
+            showMessage("Veuillez remplir tous les champs.","error");
             return;
         }
 
@@ -402,7 +413,7 @@ function setupValidateButton() {
                 // Fermer la modale
                 closeModal();
             } else {
-                alert("Erreur lors de l'ajout du projet.");
+                showMessage("Erreur lors de l'ajout du projet.");
             }
         } catch (error) {
             console.error("Erreur lors de l'ajout de la photo :", error.message);
@@ -410,35 +421,35 @@ function setupValidateButton() {
     });
 }
 
-// ==================================
+
 // Initialisation
-// ==================================
+
 
 document.addEventListener("DOMContentLoaded", () => {
     init();
 });
 
 function init() {
-    // Charger la gestion du formulaire de connexion
+    // Charge la gestion du formulaire de connexion
     setupLoginForm();
 
-    // Charger la galerie et les éléments nécessaires
+    // Charge la galerie et les éléments nécessaires
     work();
 
-    // Configurer les interactions modales
+    // Configure les interactions modales
     setupAddPhotoModal();
     setupValidateButton();
 
-    // Gérer les éléments administratifs pour le mode connecté
+    // Gère les éléments administratifs pour le mode connecté
     manageAdminElements();
 
-    // Configurer la fermeture des modales
+    // Configure la fermeture des modales
     const closeButton = document.querySelector(".modal-close");
     if (closeButton) {
         closeButton.addEventListener("click", closeModal);
     }
 
-    // Fermer la modale si clic hors de la fenêtre
+    // Ferme la modale si clic hors de la fenêtre
     window.addEventListener("click", (e) => {
         if (e.target.id === "project-modal") closeModal();
     });
@@ -446,11 +457,11 @@ function init() {
 
 async function work() {
     try {
-        const gallery = await fetchGallery(); // Récupérer les travaux
-        const categories = await fetchCategories(); // Récupérer les catégories
-        const isConnected = sessionStorage.getItem("isConnected") === "true"; // Vérifier la connexion
+        const gallery = await fetchGallery(); 
+        const categories = await fetchCategories(); 
+        const isConnected = sessionStorage.getItem("isConnected") === "true"; // Vérifie la connexion
 
-        // Afficher la galerie dans tous les cas
+        // Affiche la galerie dans tous les cas
         if (gallery.length) displayGallery(gallery);
 
         // Si l'utilisateur n'est PAS connecté, afficher les filtres

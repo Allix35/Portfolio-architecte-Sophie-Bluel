@@ -6,21 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Optimisation : fusion de Work Sans avec les poids demandés -->
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Lien vers votre feuille de style locale -->
     <link rel="stylesheet" href="./assets/style.css">
-    <!-- Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-</head>
-
+  </head>
   <body>
     <!-- Barre d'édition visible uniquement en mode administrateur -->
     <div class="edit-bar" style="display: none;">
       <p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>
     </div>
 
-    <!-- En-tête -->
+    <!-- Conteneur pour les messages dynamiques -->
+    <div class="message-container" style="display: none;"></div>
+
     <header>
       <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
       <nav>
@@ -34,9 +32,7 @@
       </nav>
     </header>
 
-    <!-- Contenu principal -->
     <main>
-      <!-- Section introduction -->
       <section id="introduction">
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel">
@@ -50,7 +46,6 @@
       </section>
 
       <!-- Section portfolio -->
-       
       <section id="portfolio">
         <div class="title-container">
           <h2>Mes projets</h2>
@@ -58,20 +53,17 @@
             <i class="fa-regular fa-pen-to-square"></i> Modifier
           </a>
         </div>
-        <div id="filters">
-        </div>
-        <div class="gallery">
-        </div>
+        <div id="filters"></div>
+        <div class="gallery"></div>
       </section>
+
+      <!-- Modale -->
       <div class="modal" id="project-modal" style="display: none;">
         <div class="modal-content">
-          <button class="modal-close" aria-label="Fermer la modale">
-            &times;
-          </button>
+          <button class="modal-close" aria-label="Fermer la modale">&times;</button>
           <div class="modal-view" id="modal-view-main">
             <h2 class="modal-title">Galerie photo</h2>
-            <div class="gallery-grid">
-            </div>
+            <div class="gallery-grid"></div>
             <div class="separator-line"></div>
             <button class="add-photo-btn">Ajouter une photo</button>
           </div>
@@ -82,32 +74,29 @@
             <h2 class="modal-title">Ajout photo</h2>
             <div class="upload-zone">
               <div class="upload-preview">
-                  <i class="fa-regular fa-image"></i>
-                  <button type="button" class="upload-button">+ Ajouter photo</button>
-                  <p class="upload-instructions">jpg, png : 4mo max</p>
+                <i class="fa-regular fa-image"></i>
+                <button type="button" class="upload-button">+ Ajouter photo</button>
+                <p class="upload-instructions">jpg, png : 4mo max</p>
               </div>
-          </div>
-          
-          <div class="form-fields">
-            <div class="form-group">
+            </div>
+            <div class="form-fields">
+              <div class="form-group">
                 <label for="title">Titre</label>
                 <input type="text" id="title" name="title" required>
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label for="category-select">Catégorie</label>
                 <select id="category-select" name="category" required>
-                    <option value="" disabled selected>Choisissez une catégorie</option>
-                    <!-- Options générées dynamiquement par JavaScript -->
+                  <option value="" disabled selected>Choisissez une catégorie</option>
                 </select>
+              </div>
             </div>
-        </div>
-        <div class="separator-line"></div>        
-              
-              <button type="submit" class="validate-btn">Valider</button>
-            </form>
+            <div class="separator-line"></div>
+            <button type="submit" class="validate-btn">Valider</button>
           </div>
         </div>
       </div>
+
       <section id="contact">
         <h2>Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>
@@ -122,6 +111,7 @@
         </form>
       </section>
     </main>
+
     <footer>
       <nav>
         <ul>
@@ -129,9 +119,10 @@
         </ul>
       </nav>
     </footer>
+
     <script src="./assets/script.js"></script>
   </body>
-</html>
+</html> 
 
 
 
