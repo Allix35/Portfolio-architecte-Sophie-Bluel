@@ -10,15 +10,16 @@
     <link rel="stylesheet" href="./assets/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   </head>
-  <body data-page="main">
 
-    <!-- Barre d'édition visible uniquement en mode administrateur -->
+   <!-- Edit mode -->
+
+  <body data-page="main">
     <div class="edit-bar" style="display: none;">
       <p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>
     </div>
-
-    <!-- Conteneur pour les messages dynamiques -->
     <div class="message-container" style="display: none;"></div>
+
+     <!-- Header -->
 
     <header>
       <h1>Sophie Bluel <span>ARCHITECTE D'INTERIEUR</span></h1>
@@ -34,6 +35,9 @@
     </header>
 
     <main>
+
+       <!-- Introduction -->
+
       <section id="introduction">
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="Portrait de Sophie Bluel">
@@ -47,6 +51,7 @@
       </section>
 
       <!-- Section portfolio -->
+
       <section id="portfolio">
         <div class="title-container">
           <h2>Mes projets</h2>
@@ -58,7 +63,8 @@
         <div class="gallery"></div>
       </section>
 
-      <!-- Modale -->
+      <!-- Modal -->
+
       <div class="modal" id="project-modal" style="display: none;">
         <div class="modal-content">
           <button class="modal-close" aria-label="Fermer la modale">&times;</button>
@@ -98,6 +104,8 @@
         </div>
       </div>
 
+       <!-- Section contact -->
+
       <section id="contact">
         <h2>Contact</h2>
         <p>Vous avez un projet ? Discutons-en !</p>
@@ -113,6 +121,8 @@
       </section>
     </main>
 
+     <!-- Footer -->
+
     <footer>
       <nav>
         <ul>
@@ -120,8 +130,7 @@
         </ul>
       </nav>
     </footer>
-
-    <script src="./assets/script.js"></script>
+    <script src="./assets/script.js"></script> 
   </body>
 </html> 
 

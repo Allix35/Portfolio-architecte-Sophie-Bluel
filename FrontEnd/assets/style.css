@@ -1,4 +1,8 @@
-/* RESET */
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,7 +24,34 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
-/* GLOBAL */
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/** end reset css**/
+
 body {
     line-height: 1;
     margin: auto;
@@ -35,6 +66,10 @@ header {
     justify-content: space-between;
     margin: 35px 110px;
     margin-top: 60px;
+}
+
+section {
+	margin: 50px 0
 }
 
 main {
@@ -103,7 +138,8 @@ li:hover {
     cursor: pointer;
 }
 
-/* INTRODUCTION */
+/* Introduction */
+
 #introduction {
     display: flex;
     align-items: center;
@@ -120,15 +156,17 @@ li:hover {
     display: block;
     margin: auto;
     width: 80%;
-    margin-left: 55px;
+    margin-left: 10px;
+    padding-right: 75px;
 }
 
 #introduction article {
     flex: 1;
     max-width: 404px;
-    margin: 0 auto;
+    margin-right: 53px;
     text-align: left;
     height: 315px;
+    margin-left: -60px;
 }
 
 #introduction h2 {
@@ -142,7 +180,8 @@ li:hover {
     width: 404px;
 }
 
-/* PORTFOLIO */
+/* Portfolio */
+
 #portfolio {
     margin: 50px 0;
 }
@@ -175,7 +214,7 @@ li:hover {
     margin-right: 5px;
 }
 
-/* Barre d'édition (Edit Bar) */
+/* Edit Bar */
 
 .edit-bar {
     background-color: #000000; 
@@ -206,6 +245,7 @@ li:hover {
     color: #FFFFFF; 
 }
 
+/* Filters */
 
 #filters {
     display: flex;
@@ -219,18 +259,22 @@ li:hover {
     padding: 10px 20px;
     border: 2px solid #1D6154;
     border-radius: 60px;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
     color: #1D6154;
     background: none;
     cursor: pointer;
+    font-family: Syne;
+    line-height: 19.2px;
+    text-align: center;
 }
 
 .filter-btn.active-filter {
     background: #1D6154;
     color: white;
 }
+
+/* Gallery */
 
 .gallery {
     display: grid;
@@ -244,7 +288,8 @@ li:hover {
     object-fit: cover;
 }
 
-/* CONTACT */
+/* Contact */
+
 #contact {
     width: 50%;
     margin: auto;
@@ -295,7 +340,7 @@ li:hover {
     background-color: #0E2F28;
 }
 
-/* Login page */
+/* Login Page */
 
 #login {
     width: 50%;
@@ -353,7 +398,8 @@ li:hover {
     margin-top: 10px;
 }
 
-/* MODAL */
+/* Modal */
+
 .modal {
     display: none;
     position: fixed;
@@ -400,6 +446,8 @@ li:hover {
     cursor: pointer;
 }
 
+/* Modal Gallery */
+
 .modal .gallery-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -417,6 +465,8 @@ li:hover {
     height: auto;
     object-fit: cover;
 }
+
+/* Delete Button */
 
 .delete-btn {
     position: absolute;
@@ -442,6 +492,8 @@ li:hover {
     width: 447px; 
     margin: 20px auto; 
 }
+
+/* Add Photo Button */
 
 .add-photo-btn {
     display: block; 
@@ -469,6 +521,8 @@ li:hover {
     width: 100%;
 }
 
+/* Arrow left */
+
 .back-button {
     position: absolute;
     top: 15px; 
@@ -489,6 +543,8 @@ li:hover {
     font-size: 21px; 
     color: #3D3D3D; 
 }
+
+/* Upload Zone */
 
 .upload-zone {
     display: flex;
@@ -548,6 +604,8 @@ li:hover {
     ;
 }
 
+/*  */
+
 .category-indicators {
     display: flex;
     flex-direction: row;
@@ -573,6 +631,8 @@ li:hover {
     color: #A9B9C9;
     font-weight: bold;
 }
+
+/* Form */
 
 .form-fields {
     display: flex;
@@ -616,6 +676,8 @@ li:hover {
     box-shadow: 0px 4px 14px 0px rgba(79, 145, 214, 0.2); 
 }
 
+/* Validate Button */
+
 .validate-btn {
     display: block;
     margin: auto;
@@ -631,13 +693,10 @@ li:hover {
     border: none;
     margin-bottom: 10px;
     margin-top: 25px;
+    cursor: pointer;
 }
 
-footer {
-    display: flex;
-    justify-content: flex-end; 
-    margin-bottom: 30px;
-}
+/* Modal Message */
 
 .message-container {
     position: fixed;
@@ -667,6 +726,12 @@ footer {
     border-color: #f5c6cb;
 }
 
+/* Footer */
 
+footer {
+    display: flex;
+    justify-content: flex-end; 
+    margin-bottom: 30px;
+}
 
   
