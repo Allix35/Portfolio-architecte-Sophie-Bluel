@@ -6,7 +6,7 @@ async function fetchGallery() {
     const url = "http://localhost:5678/api/works";
     try {
         const response = await fetch(url); 
-        if (!response.ok) throw new Error(`Erreur : ${response.status}`); 
+        if (!response.ok) throw new Error(`Erreur : ${response.status}`);
         const data = await response.json(); 
         console.log("Données des travaux récupérées depuis l'API :", data); 
         return Array.isArray(data) ? data : []; 
@@ -19,19 +19,21 @@ async function fetchGallery() {
 // 2. Display gallery into DOM
 
 function displayGallery(gallery) {
-    console.log("Galerie à afficher :", gallery); 
+    console.log("Galerie à afficher :", gallery);  
     const galleryContainer = document.querySelector(".gallery"); 
-    if (!galleryContainer) {
+
+    if (!galleryContainer) {  
         console.error("Le conteneur .gallery est introuvable !"); 
-        return;
+        return; 
     }
 
     galleryContainer.innerHTML = ""; 
-    gallery.forEach((work) => {
+    gallery.forEach((work) => {  
         const figure = document.createElement("figure"); 
 
-        const img = document.createElement("img");
-        img.src = work.imageUrl; 
+        const img = document.createElement("img"); 
+
+        img.src = work.imageUrl;
         img.alt = work.title; 
 
         const caption = document.createElement("figcaption"); 
@@ -48,24 +50,25 @@ function displayGallery(gallery) {
 async function fetchCategories() {
     const url = "http://localhost:5678/api/categories";
     try {
-        const response = await fetch(url); // Requête API pour les catégories
-        if (!response.ok) throw new Error(`Erreur : ${response.status}`); // Vérifie la réponse
-        const data = await response.json(); // Convertit la réponse en JSON
-        console.log("Données des catégories récupérées depuis l'API :", data); // Debug des données récupérées
-        return Array.isArray(data) ? data : []; // Retourne un tableau ou un tableau vide
+        const response = await fetch(url); 
+        if (!response.ok) throw new Error(`Erreur : ${response.status}`); 
+        const data = await response.json(); 
+        console.log("Données des catégories récupérées depuis l'API :", data); 
+        return Array.isArray(data) ? data : []; 
     } catch (error) {
-        console.error("Erreur lors de la récupération des catégories :", error.message); // Gestion des erreurs
-        return []; // Retourne un tableau vide en cas d'erreur
+        console.error("Erreur lors de la récupération des catégories :", error.message); 
+        return []; 
     }
 }
 
 // 4. Selecte active filter
 
 function toggleActiveFilter(activeButton) {
-    console.log("Mise à jour du filtre actif :", activeButton.textContent); 
+    console.log("Mise à jour du filtre actif :", activeButton.textContent);   
     document.querySelectorAll(".filter-btn").forEach((btn) =>
         btn.classList.remove("active-filter") 
     );
+
     activeButton.classList.add("active-filter"); 
 }
 
@@ -80,10 +83,10 @@ function displayFilters(categories, gallery) {
 
     // Add "Tous" button
 
-    const allButton = document.createElement("button");
+    const allButton = document.createElement("button"); 
     allButton.textContent = "Tous"; 
     allButton.classList.add("filter-btn", "active-filter"); 
-    allButton.addEventListener("click", () => {
+    allButton.addEventListener("click", () => { 
         console.log("Filtre 'Tous' sélectionné"); 
         displayGallery(gallery); 
         toggleActiveFilter(allButton); 
@@ -92,17 +95,17 @@ function displayFilters(categories, gallery) {
 
     // Add button for each categories
 
-    categories.forEach((category) => {
-        const button = document.createElement("button");
+    categories.forEach((category) => {  
+        const button = document.createElement("button"); 
         button.textContent = category.name; 
         button.classList.add("filter-btn"); 
-        button.addEventListener("click", () => {
+        button.addEventListener("click", () => {  
             console.log(`Filtre sélectionné : ${category.name}`); 
             const filteredGallery = gallery.filter(
                 (work) => work.categoryId === category.id 
             );
             console.log(`Galerie filtrée pour la catégorie ${category.name} :`, filteredGallery); 
-            displayGallery(filteredGallery);
+            displayGallery(filteredGallery); //Display works of filter selected
             toggleActiveFilter(button); 
         });
         filtersContainer.appendChild(button); 
@@ -113,9 +116,8 @@ function displayFilters(categories, gallery) {
 
 // 1. Admin element : User connected by sessionstorage & edit element displayed
 
-function manageAdminElements() {
+function adminElements() {
     const isConnected = sessionStorage.getItem("isConnected") === "true"; 
-
     const loginButton = document.getElementById("login"); 
     const logoutButton = document.getElementById("logout"); 
     const adminBar = document.querySelector(".edit-bar"); 
@@ -129,13 +131,14 @@ function manageAdminElements() {
         logoutButton.style.display = isConnected ? "block" : "none"; 
 
         logoutButton.addEventListener("click", () => {
-            sessionStorage.clear(); 
-            window.location.reload(); 
+            sessionStorage.clear(); // Clear data from session storage (connexion state)
+            window.location.reload(); //Reload page to display disconnected page
         });
     }
-
+    // Admin Bar
     if (adminBar) adminBar.style.display = isConnected ? "flex" : "none";
-
+    
+    // Edit Button
     if (editButton) {
         editButton.style.display = isConnected ? "inline-flex" : "none"; 
         
@@ -148,7 +151,7 @@ function manageAdminElements() {
 
 // 2. Configure connexion form
 
-function setupLoginForm() {
+function loginForm() {
     const loginForm = document.querySelector("#loginForm"); 
 
     if (!loginForm) {
@@ -157,8 +160,8 @@ function setupLoginForm() {
     }
 
     loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault(); 
-
+        e.preventDefault(); //Stop the button default action & stop the form reload
+        
         const email = document.querySelector("#email").value.trim(); 
         const password = document.querySelector("#password").value.trim(); 
         const errorMessage = document.querySelector(".error-message"); 
@@ -196,13 +199,13 @@ async function loginUser(email, password) {
         const response = await fetch(url, {
             method: "POST", 
             headers: { "Content-Type": "application/json" }, 
-            body: JSON.stringify({ email, password }), 
+            body: JSON.stringify({ email, password }), //Data convert into JSON
         });
 
         if (response.ok) {
             const data = await response.json(); 
-            sessionStorage.setItem("Token", data.token); 
-            sessionStorage.setItem("isConnected", "true"); 
+            sessionStorage.setItem("Token", data.token); //Token put into sessionstorage
+            sessionStorage.setItem("isConnected", "true"); //Show the user connected
             return true; 
         } else {
             return false; 
@@ -219,8 +222,8 @@ async function loginUser(email, password) {
 
 function openModal() {
     const modal = document.getElementById("project-modal");
-    const modalMainView = document.querySelector("#modal-view-main");
-    const modalAddView = document.querySelector("#modal-view-add");
+    const modalMainView = document.querySelector("#modal-first-view");
+    const modalAddView = document.querySelector("#modal-second-view");
 
     if (modal && modalMainView && modalAddView) {
         modal.style.display = "flex";
@@ -238,26 +241,26 @@ function closeModal() {
 
 // 3. Function to navigate between the 2 views of the Modal
 
-function setupAddPhotoModal() {
+function addPhotoModal() {
     const addPhotoButton = document.querySelector(".add-photo-btn");
     const backButton = document.querySelector("#back-to-main");
 
     addPhotoButton.addEventListener("click", () => {
-        document.querySelector("#modal-view-main").style.display = "none";
-        document.querySelector("#modal-view-add").style.display = "block";
-        populateCategorySelect();
+        document.querySelector("#modal-first-view").style.display = "none";
+        document.querySelector("#modal-second-view").style.display = "block";
+        modalCategorySelect();
     });
 
     backButton.addEventListener("click", () => {
-        document.querySelector("#modal-view-main").style.display = "block";
-        document.querySelector("#modal-view-add").style.display = "none";
+        document.querySelector("#modal-first-view").style.display = "block";
+        document.querySelector("#modal-second-view").style.display = "none";
     });
 }
 
-// 4. Populate category select dropdown
+// 4. Fill Modal menu with categories get from API
 
-async function populateCategorySelect() {
-    const categorySelect = document.getElementById("category-select");
+async function modalCategorySelect() {
+    const categorySelect = document.getElementById("category-select"); 
     categorySelect.innerHTML = ''; 
 
     const defaultOption = document.createElement("option");
@@ -311,6 +314,8 @@ async function deletePhoto(workId) {
 
     try {
         const token = sessionStorage.getItem("Token");
+        console.log("Token envoyé dans la requête :", token);
+
         const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
             method: "DELETE",
             headers: {
@@ -346,9 +351,9 @@ function showMessage(message, type = "success") {
     }, 3000);
 }
 
-// 8. Setup validation and submission for adding a new project
+// 8. Validation and submission for adding a new project
 
-function setupValidateButton() {
+function validateButton() {
     const validateButton = document.querySelector(".validate-btn");
     const fileInput = document.createElement("input");
     fileInput.type = "file";
@@ -383,10 +388,14 @@ function setupValidateButton() {
             return;
         }
 
+        // New formdata created to prepare the data to send to the server
+
         const formData = new FormData();
         formData.append("image", file);
         formData.append("title", title);
         formData.append("category", category);
+
+        // Send data to server
 
         try {
             const token = sessionStorage.getItem("Token");
@@ -463,12 +472,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const pageType = document.body.dataset.page; 
 
     if (pageType === "login") {
-        setupLoginForm();
+        loginForm();
     } else if (pageType === "main") {
         work();
-        manageAdminElements();
-        setupAddPhotoModal();
-        setupValidateButton();
+        adminElements();
+        addPhotoModal();
+        validateButton();
 
         const closeButton = document.querySelector(".modal-close");
         if (closeButton) {

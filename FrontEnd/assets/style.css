@@ -278,7 +278,7 @@ li:hover {
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); 
     gap: 20px;
     margin: 20px 145px 0 99px;
 }
@@ -310,6 +310,7 @@ li:hover {
     margin: 2em 0 1em 0;
     color: #3D3D3D;
     text-align: left;
+    margin-left : 130px;
 }
 
 #contact input,
@@ -319,6 +320,9 @@ li:hover {
     border: none;
     padding: 10px;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    width: 379px;
+    display: block;
+    margin: auto;
 }
 
 #contact textarea {
@@ -362,6 +366,7 @@ li:hover {
     margin: 1em 0 0.5em 0;
     color: #3D3D3D;
     font-weight: 500;
+    margin-left: 130px;
 }
 
 #login input {
@@ -370,6 +375,9 @@ li:hover {
     font-size: 1.2em;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
     padding: 10px;
+    width : 379px;
+    display: block;
+    margin: auto;
 }
 
 #login input[type="submit"] {
@@ -604,7 +612,7 @@ li:hover {
     ;
 }
 
-/*  */
+/* Categories upload zone */
 
 .category-indicators {
     display: flex;
@@ -633,6 +641,7 @@ li:hover {
 }
 
 /* Form */
+
 
 .form-fields {
     display: flex;
@@ -671,11 +680,6 @@ li:hover {
     box-sizing: border-box;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-    box-shadow: 0px 4px 14px 0px rgba(79, 145, 214, 0.2); 
-}
-
 /* Validate Button */
 
 .validate-btn {
@@ -708,7 +712,7 @@ li:hover {
     padding: 10px 20px;
     border: 1px solid #f5c6cb;
     border-radius: 5px;
-    font-family: Arial, sans-serif;
+    font-family: 'Work Sans' sans-serif ;
     font-size: 14px;
     display: none;
     z-index: 1000;
