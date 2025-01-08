@@ -181,10 +181,12 @@ function loginForm() {
             } else {
                 errorMessage.textContent = "Erreur dans l’identifiant ou le mot de passe."; 
                 errorMessage.style.display = "block";
+                errorMessage.style.margin = "auto";
             }
         } catch (error) {
             errorMessage.textContent = "Erreur de connexion au serveur."; 
             errorMessage.style.display = "block";
+            errorMessage.style.margin = "auto";
         }
     });
 }
@@ -363,9 +365,9 @@ function validateButton() {
     const titleInput = document.getElementById("title");
     const categorySelect = document.getElementById("category-select");
 
-    imagePreview.addEventListener("click", () => fileInput.click());
+    imagePreview.addEventListener("click", () => fileInput.click()); //Click to open the dialogue box
 
-    fileInput.addEventListener("change", (e) => {
+    fileInput.addEventListener("change", (e) => { //Action when changing image
         const file = e.target.files[0];
         if (file) {
             imagePreview.innerHTML = "";
