@@ -27,7 +27,7 @@ function displayGallery(gallery) {
         return; 
     }
 
-    galleryContainer.innerHTML = ""; 
+    galleryContainer.innerHTML = ""; // Delete content without reloading
     gallery.forEach((work) => {  
         const figure = document.createElement("figure"); 
 
@@ -61,7 +61,7 @@ async function fetchCategories() {
     }
 }
 
-// 4. Selecte active filter
+// 4. Apply focus button
 
 function toggleActiveFilter(activeButton) {
     console.log("Mise à jour du filtre actif :", activeButton.textContent);   
@@ -81,7 +81,7 @@ function displayFilters(categories, gallery) {
 
     filtersContainer.innerHTML = ""; 
 
-    // Add "Tous" button
+    // Add "Tous" button as default button
 
     const allButton = document.createElement("button"); 
     allButton.textContent = "Tous"; 
@@ -105,7 +105,7 @@ function displayFilters(categories, gallery) {
                 (work) => work.categoryId === category.id 
             );
             console.log(`Galerie filtrée pour la catégorie ${category.name} :`, filteredGallery); 
-            displayGallery(filteredGallery); //Display works of filter selected
+            displayGallery(filteredGallery); 
             toggleActiveFilter(button); 
         });
         filtersContainer.appendChild(button); 
@@ -318,7 +318,7 @@ async function deletePhoto(workId) {
         const token = sessionStorage.getItem("Token");
         console.log("Token envoyé dans la requête :", token);
 
-        const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+        const response = await fetch(`http://localhost:5678/api/works/${workId}`, { //Request fetch to ask server to delete the picture
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -326,7 +326,7 @@ async function deletePhoto(workId) {
         });
 
         if (response.ok) {
-            const gallery = await fetchGallery();
+            const gallery = await fetchGallery(); //Reload gallery from API
             displayGallery(gallery);
             displayModalGallery(gallery);
             showMessage("Photo supprimée avec succès !", "success");
@@ -380,6 +380,8 @@ function validateButton() {
 
     validateButton.addEventListener("click", async (e) => {
         e.preventDefault();
+
+        //Get the elements selected
 
         const file = fileInput.files[0];
         const title = titleInput.value.trim();
